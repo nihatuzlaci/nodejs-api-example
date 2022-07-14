@@ -83,8 +83,29 @@ const getUsers = async (req, res) => {
   }
 };
 
+const privateProfile = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        isPrivateProfile: req.body.isPrivate,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Interval server error",
+    });
+  }
+};
+
 module.exports = {
   createUser,
   getUsers,
   login,
+  privateProfile,
 };
