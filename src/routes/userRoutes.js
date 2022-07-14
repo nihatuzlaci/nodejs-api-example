@@ -7,6 +7,8 @@ const {
   getUsers,
   privateProfile,
   login,
+  resetPassword,
+  forgotPassword,
 } = require("../controllers/userController");
 
 const { verifyToken } = require("../middlewares/auth");
@@ -15,6 +17,8 @@ router.get("/", [verifyToken], getUsers);
 
 router.post("/login", login);
 router.post("/", createUser);
+router.post("/reset-password", resetPassword);
+router.post("/forgot-password", forgotPassword);
 
 router.put("/private-profile/:id", privateProfile);
 

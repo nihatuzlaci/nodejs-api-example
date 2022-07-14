@@ -103,9 +103,101 @@ const privateProfile = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Email is not correct",
+      });
+    }
+
+    // const randomHexString = crypto.randomBytes(15).toString("hex");
+    // const resetPasswordToken = crypto
+    //   .createHash("SHA256")
+    //   .update(randomHexString)
+    //   .digest("hex");
+
+    const code = Math.floor(100000 + Math.random() * 900000);
+
+    //  user.resetPasswordToken = resetPasswordToken;
+    user.resetPasswordExpires = Date.now() + 60 * 60 * 1000;
+    user.resetPasswordCode = code;
+
+    await user.save();
+
+    const mailOptions = {
+      from: process.env.SMTP_EMAIL,
+      to: user.email,
+      subject: "Node Mailer",
+      text: "Hello People!, Welcome to App!",
+      html: `"<p>Reset password code : <b>${code}</b></p> "`,
+    };
+
+    sendMail(mailOptions);
+
+    res.status(200).json({
+      success: true,
+      message: "Check your inbox we sent you an e-mail to reset your password",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      resetPasswordCode: req.body.resetPasswordCode,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "Reset password code wrong or Reset password expired",
+      });
+    }
+    const password = Math.floor(100000 + Math.random() * 900000);
+
+    user.password = password;
+    user.resetPasswordCode = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    const mailOptions = {
+      from: process.env.SMTP_EMAIL,
+      to: user.email,
+      subject: "Node Mailer",
+      text: "Hello People!, Welcome to App!",
+      html: `"<p>Your new password : <b>${password}</b></p> "`,
+    };
+
+    sendMail(mailOptions);
+
+    res.status(200).json({
+      success: false,
+      message: "Your new password sent your e-mail address",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   createUser,
   getUsers,
   login,
   privateProfile,
+  forgotPassword,
+  resetPassword,
 };
