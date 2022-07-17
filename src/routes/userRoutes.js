@@ -20,6 +20,6 @@ router.post("/", createUser);
 router.post("/reset-password", resetPassword);
 router.post("/forgot-password", forgotPassword);
 
-router.put("/private-profile/:id", privateProfile);
+router.put("/private-profile/:id", [verifyToken], privateProfile);
 
 module.exports = router;
