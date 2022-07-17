@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-
-const app = express();
+const helmet = require("helmet");
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
@@ -10,8 +9,11 @@ const likeRoutes = require("./routes/likeRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const friendshipRoutes = require("./routes/friendshipRoutes");
 
+const app = express();
+
 app.use(cors());
 app.use(morgan("combined"));
+app.use(helmet());
 
 app.use(express.json());
 
