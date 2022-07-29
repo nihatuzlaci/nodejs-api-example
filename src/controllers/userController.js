@@ -131,8 +131,8 @@ const forgotPassword = async (req, res) => {
     const mailOptions = {
       from: process.env.SMTP_EMAIL,
       to: user.email,
-      subject: "Node Mailer",
-      text: "Hello People!, Welcome to App!",
+      subject: "Reset Password",
+      text: "Hello!",
       html: `"<p>Reset password code : <b>${code}</b></p> "`,
     };
 
@@ -174,8 +174,8 @@ const resetPassword = async (req, res) => {
     const mailOptions = {
       from: process.env.SMTP_EMAIL,
       to: user.email,
-      subject: "Node Mailer",
-      text: "Hello People!, Welcome to App!",
+      subject: "New Password",
+      text: "Hello!",
       html: `"<p>Your new password : <b>${password}</b></p> "`,
     };
 
