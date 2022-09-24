@@ -8,6 +8,7 @@ const toggleLikePost = async (req, res) => {
     if (post) {
       post.user = undefined;
       await post.save();
+
       return res.status(200).json({
         success: true,
         message: "Like removed",
@@ -50,7 +51,33 @@ const getLikesByPostId = async (req, res) => {
   }
 };
 
+const getUserLikeByPostId = async (req, res) => {
+  try {
+    const { userId, postId } = req.params;
+
+    const isLikeExist = await Like.exists({ user: userId, post: postId });
+
+    if (isLikeExist) {
+      return res.status(200).json({
+        success: true,
+        isLiked: true,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      isLiked: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Interval server error",
+    });
+  }
+};
+
 module.exports = {
   toggleLikePost,
   getLikesByPostId,
+  getUserLikeByPostId,
 };
