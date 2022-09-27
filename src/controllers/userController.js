@@ -132,7 +132,7 @@ const forgotPassword = async (req, res) => {
       from: process.env.SMTP_EMAIL,
       to: user.email,
       subject: "Reset Password",
-      text: "Hello!",
+      text: "Your reset password",
       html: `"<p>Reset password code : <b>${code}</b></p> "`,
     };
 
@@ -160,7 +160,7 @@ const resetPassword = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: "Reset password code wrong or Reset password expired",
+        error: "Reset password code wrong or expired",
       });
     }
     const password = Math.floor(100000 + Math.random() * 900000);
@@ -175,7 +175,7 @@ const resetPassword = async (req, res) => {
       from: process.env.SMTP_EMAIL,
       to: user.email,
       subject: "New Password",
-      text: "Hello!",
+      text: "Your new password",
       html: `"<p>Your new password : <b>${password}</b></p> "`,
     };
 

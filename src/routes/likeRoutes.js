@@ -8,8 +8,10 @@ const {
   getUserLikeByPostId,
 } = require("../controllers/likeController");
 
-router.get("/:postId/:userId", toggleLikePost);
-router.get("/:postId", getLikesByPostId);
-router.get("/check-like/:userId/:postId", getUserLikeByPostId);
+const { verifyToken } = require("../middlewares/auth");
+
+router.get("/:postId/:userId", verifyToken, toggleLikePost);
+router.get("/:postId", verifyToken, getLikesByPostId);
+router.get("/check-like/:userId/:postId", verifyToken, getUserLikeByPostId);
 
 module.exports = router;

@@ -7,7 +7,9 @@ const {
   createComment,
 } = require("../controllers/commentController");
 
-router.get("/:id", getCommentsByPostId);
-router.post("/:id/:userId", createComment);
+const { verifyToken } = require("../middlewares/auth");
+
+router.get("/:id", verifyToken, getCommentsByPostId);
+router.post("/:id/:userId", verifyToken, createComment);
 
 module.exports = router;

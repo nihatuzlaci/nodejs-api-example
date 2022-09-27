@@ -2,14 +2,14 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
-const isTokenİnclude = (req) => {
+const isTokenİncluded = (req) => {
   return (
     req.headers.authorization && req.headers.authorization.includes("Bearer")
   );
 };
 
 const getTokenFromHeader = (req, res) => {
-  if (!isTokenİnclude(req)) {
+  if (!isTokenİncluded(req)) {
     return res
       .status(401)
       .json({ success: false, message: "Please provide a token" });
@@ -31,7 +31,7 @@ const verifyToken = (req, res, next) => {
   const token = getTokenFromHeader(req, res);
 
   if (token) {
-    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+    jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
       if (err) {
         return res.status(401).json({
           success: false,

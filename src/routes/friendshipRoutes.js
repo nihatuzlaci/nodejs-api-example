@@ -11,11 +11,25 @@ const {
   removeFriendship,
 } = require("../controllers/friendshipController");
 
-router.get("/", getFriendshipRequests);
-router.get("/:senderId/:receiverId", sendFriendshipRequest);
-router.get("/cancel/:senderId/:receiverId", cancelFriendshipRequest);
-router.get("/check-friendship-status/:senderId/:receiverId", checkFriendship);
-router.get("/response/:senderId/:receiverId/:response", friendshipResponse);
-router.get("/remove/:senderId/:receiverId", removeFriendship);
+const { verifyToken } = require("../middlewares/auth");
+
+router.get("/", verifyToken, getFriendshipRequests);
+router.get("/:senderId/:receiverId", verifyToken, sendFriendshipRequest);
+router.get(
+  "/cancel/:senderId/:receiverId",
+  verifyToken,
+  cancelFriendshipRequest
+);
+router.get(
+  "/check-friendship-status/:senderId/:receiverId",
+  verifyToken,
+  checkFriendship
+);
+router.get(
+  "/response/:senderId/:receiverId/:response",
+  verifyToken,
+  friendshipResponse
+);
+router.get("/remove/:senderId/:receiverId", verifyToken, removeFriendship);
 
 module.exports = router;

@@ -9,9 +9,11 @@ const {
   deletePost,
 } = require("../controllers/postController");
 
-router.get("/", getPosts);
-router.get("/:id", getPostsByUserId);
-router.post("/", createPost);
-router.delete("/:id", deletePost);
+const { verifyToken } = require("../middlewares/auth");
+
+router.get("/", verifyToken, getPosts);
+router.get("/:id", verifyToken, getPostsByUserId);
+router.post("/", verifyToken, createPost);
+router.delete("/:id", verifyToken, deletePost);
 
 module.exports = router;
