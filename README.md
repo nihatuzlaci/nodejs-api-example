@@ -43,3 +43,13 @@ SMTP_EMAIL
 SMTP_PASS
 
 ```
+
+after setting up everything you can run app.
+
+To run:
+
+`npm start`
+
+
+
+
