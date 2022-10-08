@@ -1,20 +1,20 @@
 # NodeJS Rest API example
 
-I created this repo to learn and improve my nodejs knowledge
+I created this repo to learn and improve my NodeJS knowledge.
 
 ## Getting Started
 
-`npm install` to install all required dependencies
+`npm install` to install all necessary dependencies.
 
 
 ## Folder Structure
 
-- `controllers` - This folder controls api request and saving database.
+- `controllers` - This folder controls api requests and saves databases.
 - `routes` - This folder contains our API's routes.
 - `models` - This folder contains database models.
-- `middlewares` - This folder contains middlwares for our API.
+- `middlewares` - This folder contains middlewares for our API.
 - `helpers` - This folder contains npm packages.
-- `services` - This folder contains mongo connection.
+- `services` - This folder contains the Mongo Connection.
 
 
 ## Technologies
@@ -28,7 +28,7 @@ I created this repo to learn and improve my nodejs knowledge
 
 ## Enviroment Variables
 
-Create an env file and set your env variables.
+Create an env file and set your environment variables.
 
 ```
 PORT
@@ -44,7 +44,7 @@ SMTP_PASS
 
 ```
 
-after setting up everything you can run app.
+After setting up everything, you can run the app.
 
 To run:
 
