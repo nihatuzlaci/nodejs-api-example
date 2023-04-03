@@ -2,14 +2,14 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
-const isTokenİncluded = (req) => {
+const isTokenIncluded = (req) => {
   return (
     req.headers.authorization && req.headers.authorization.includes("Bearer")
   );
 };
 
 const getTokenFromHeader = (req, res) => {
-  if (!isTokenİncluded(req)) {
+  if (!isTokenIncluded(req)) {
     return res
       .status(401)
       .json({ success: false, message: "Please provide a token" });
